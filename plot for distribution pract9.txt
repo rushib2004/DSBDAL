@@ -1,0 +1,22 @@
+# Import necessary libraries
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Load the Titanic dataset
+url = "https://raw.githubusercontent.com/datasciencedojo/datasets/master/titanic.csv"
+df = pd.read_csv(url)
+
+# Display first few rows
+print("Dataset Preview:\n", df.head())
+
+# Set Seaborn style
+sns.set(style="whitegrid")
+
+# Box plot: Age distribution grouped by Passenger Class
+plt.figure(figsize=(8, 6))
+sns.boxplot(x='Pclass', y='Age', data=df, palette="Set2")
+plt.title('Age Distribution by Passenger Class')
+plt.xlabel('Passenger Class')
+plt.ylabel('Age')
+plt.show()

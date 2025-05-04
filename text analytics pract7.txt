@@ -1,0 +1,27 @@
+# Import required libraries
+import pandas as pd
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.preprocessing import LabelEncoder
+
+# Load the dataset
+url = "https://raw.githubusercontent.com/justmarkham/pycon-2016-tutorial/master/data/sms.tsv"
+df = pd.read_csv(url, sep='\t', header=None, names=['label', 'message'])
+
+# Display first few rows
+print("Dataset Preview:\n", df.head())
+
+# Text preprocessing (optional but recommended)
+# Lowercasing and removing punctuation can be added here if needed
+
+# TF-IDF Vectorization
+vectorizer = TfidfVectorizer(stop_words='english') 
+X_tfidf = vectorizer.fit_transform(df['message'])
+
+# Display TF-IDF matrix shape and example
+print("\nTF-IDF Matrix Shape:", X_tfidf.shape)
+
+# Convert the sparse matrix to a dense format (for small datasets)
+df_tfidf = pd.DataFrame(X_tfidf.toarray(), columns=vectorizer.get_feature_names_out())
+
+# Show first few rows of TF-IDF scores
+print("\nTF-IDF Sample:\n", df_tfidf.head())

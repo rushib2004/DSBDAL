@@ -1,0 +1,39 @@
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import classification_report, accuracy_score, confusion_matrix
+
+# Load dataset
+df = pd.read_csv("StudentsPerformance.csv")
+
+# Clean column names
+df.columns = df.columns.str.lower().str.replace(' ', '_')
+
+# Create a target column: Pass if average score >= 60
+df['average_score'] = df[['math_score', 'reading_score', 'writing_score']].mean(axis=1)
+df['pass'] = (df['average_score'] >= 60).astype(int)  # 1 = Pass, 0 = Fail
+
+# Select features and target
+X = df[['math_score', 'reading_score', 'writing_score']]
+y = df['pass']
+
+# Train-test split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+
+# Logistic Regression model
+model = LogisticRegression()
+model.fit(X_train, y_train)
+
+# Predictions
+y_pred = model.predict(X_test)
+
+# Evaluation
+print("Accuracy:", accuracy_score(y_test, y_pred))
+print("\nConfusion Matrix:\n", confusion_matrix(y_test, y_pred))
+print("\nClassification Report:\n", classification_report(y_test, y_pred))
+
+# Optional: Save predictions
+df_test = X_test.copy()
+df_test['actual'] = y_test
+df_test['predicted'] = y_pred
+df_test.to_csv("logistic_regression_predictions.csv", index=False)

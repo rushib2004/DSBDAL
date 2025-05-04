@@ -1,0 +1,37 @@
+# Import required libraries
+import pandas as pd
+import numpy as np
+from scipy import stats
+
+# Load the Iris dataset
+url = "https://raw.githubusercontent.com/uiuc-cse/data-fa14/gh-pages/data/iris.csv"
+df = pd.read_csv(url)
+
+# Display the first few rows
+print("Dataset Preview:\n", df.head())
+
+# Choose a numeric column for demonstration (e.g., 'sepal_length')
+column = 'sepal_length'
+data = df[column]
+
+print(f"\nDescriptive Statistics for '{column}':")
+
+# Central Tendency
+mean = data.mean()
+median = data.median()
+mode = data.mode().iloc[0]  # Mode may return multiple values
+
+# Measures of Variability
+std_dev = data.std()
+variance = data.var()
+data_range = data.max() - data.min()
+iqr = stats.iqr(data)
+
+# Output
+print(f"Mean: {mean}")
+print(f"Median: {median}")
+print(f"Mode: {mode}")
+print(f"Standard Deviation: {std_dev}")
+print(f"Variance: {variance}")
+print(f"Range: {data_range}")
+print(f"Interquartile Range (IQR): {iqr}")
