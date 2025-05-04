@@ -1,0 +1,37 @@
+To Build a linear regression model using python to predict house prices based on feature from the buston housing dataset.
+
+# Import necessary libraries
+import pandas as pd
+import numpy as np
+from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_squared_error, r2_score
+
+# Load the dataset and display dataset stucture
+df = pd.read_csv(url)
+print("Dataset Preview:\n", df.head())
+
+df.columns
+
+# Define features and target
+X = df[['crim', 'zn', 'indus', 'chas', 'nox', 'rm', 'age', 'dis', 'rad', 'tax',
+       'ptratio', 'b', 'lstat']]  # Features (independent variables)
+y = df['medv']   # Target (house price)
+
+
+# Split the dataset into train and test sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
+
+# Create and train the linear regression model
+model = LinearRegression()
+model.fit(X_train, y_train)
+
+
+# Predict house prices on test data
+y_pred = model.predict(X_test)
+
+
+# Evaluation metrics
+print("\nModel Coefficients:\n", model.coef_)
+print("\nIntercept:", model.intercept_)
+print("\nMean Squared Error (MSE):", mean_squared_error(y_test, y_pred))
