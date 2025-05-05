@@ -36,15 +36,3 @@ axis.set_title('Passenger Count by Sex')
 
 plt.tight_layout()
 plt.show()
-
-
-plt.figure(figsize=(10, 6))
-sns.boxplot(x='Sex', y='Age', hue='Survived', data=df, palette='Set2')
-
-# Labels and title
-plt.xlabel("Gender")
-plt.ylabel("Age")
-plt.title("Age Distribution by Gender and Survival Status")
-
-# Show plot
-plt.show()
